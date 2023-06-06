@@ -64,3 +64,4 @@ class Food(TimeStampedModel):
     class Meta:
         verbose_name = "Блюдо"
         verbose_name_plural = "Блюда"
+        ordering = ("name_ru", "internal_code",)
