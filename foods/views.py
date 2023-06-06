@@ -20,5 +20,9 @@ def _get_food_categories_queryset() -> QuerySet[models.FoodCategory]:
 
 
 class FoodCategoryListView(generics.ListAPIView):
+    """
+    Представление для получения списка категорий с относимыми
+    к ним продуктами
+    """
     queryset = _get_food_categories_queryset()
     serializer_class = serializers.FoodListSerializer
