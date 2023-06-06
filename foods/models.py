@@ -4,7 +4,7 @@ from model_utils.models import TimeStampedModel
 
 class FoodCategory(TimeStampedModel):
     """
-        Модель, отвечающая за хранение информации о категории блюд
+    Модель, отвечающая за хранение информации о категории блюд
     """
 
     name_ru = models.CharField(verbose_name="Название на русском", max_length=255, unique=True)
