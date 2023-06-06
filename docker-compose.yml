@@ -1,0 +1,44 @@
+version: "3.5"
+
+networks:
+  restraunt_network:
+    name: restraunt_network
+
+volumes:
+  restraunt_db_data:
+    name: restraunt_db_data
+  restraunt_static:
+    name: restraunt_static
+  restraunt_images:
+    name: restraunt_back_images
+
+services:
+  db:
+    image: postgres:13.3
+    ports:
+      - "5432:5432"
+    volumes:
+      - restraunt_db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=restraunt_db
+    container_name: restraunt_db
+    networks:
+      - restraunt_network
+    restart: on-failure
+
+  web:
+    build: .
+    container_name: restraunt_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - restraunt_images:/app/images/
+      - restraunt_static:/app/static/
+    networks:
+      - restraunt_network
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+    restart: on-failure
